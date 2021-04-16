@@ -1,7 +1,8 @@
 # Permutations
 
-[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/Permutations.swift) | 
- [Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/PermutationsTests.swift)]
+[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/Permutations.swift)
+|
+[Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/PermutationsTests.swift)]
 
 Methods that compute permutations of a collection’s elements, or of a subset of
 those elements.
@@ -60,7 +61,8 @@ for perm in numbers2.permutations() {
 // [10, 10, 20]
 ```
 
-To generate only unique permutations, use the `uniquePermutations(ofCount:)` method:
+To generate only unique permutations, use the `uniquePermutations(ofCount:)`
+method:
 
 ```swift
 for perm in numbers2.uniquePermutations() {
@@ -71,7 +73,8 @@ for perm in numbers2.uniquePermutations() {
 // [10, 10, 20]
 ```
 
-Given a range, the methods return a sequence of all the different permutations of the given sizes of a collection’s elements in increasing order of size.
+Given a range, the methods return a sequence of all the different permutations
+of the given sizes of a collection’s elements in increasing order of size.
 
 ```swift
 let numbers = [10, 20, 30]
@@ -98,8 +101,9 @@ for perm in numbers.permutations(ofCount: 0...) {
 
 ## Detailed Design
 
-The `permutations(ofCount:)` and `uniquePermutations(ofCount:)` methods are declared as `Collection` extensions,
-and return `Permutations` and `UniquePermutations` instances, respectively:
+The `permutations(ofCount:)` and `uniquePermutations(ofCount:)` methods are
+declared as `Collection` extensions, and return `Permutations` and
+`UniquePermutations` instances, respectively:
 
 ```swift
 extension Collection {
@@ -115,12 +119,12 @@ extension Collection where Element: Hashable {
 }
 ```
 
-Since both result types need to store an array of the collection’s
-indices and mutate the array to generate each permutation, they only
-have `Sequence` conformance. Adding `Collection` conformance would require
-storing the array in the index type, which would in turn lead to copying the
-array at every index advancement. The `Permutations` type
-conforms to `LazySequenceProtocol` when its base type conforms.
+Since both result types need to store an array of the collection’s indices and
+mutate the array to generate each permutation, they only have `Sequence`
+conformance. Adding `Collection` conformance would require storing the array in
+the index type, which would in turn lead to copying the array at every index
+advancement. The `Permutations` type conforms to `LazySequenceProtocol` when its
+base type conforms.
 
 ### Complexity
 
@@ -128,13 +132,14 @@ Calling `permutations()` is an O(1) operation. Creating the iterator for a
 `Permutations` instance and each call to `Permutations.Iterator.next()` is an
 O(_n_) operation.
 
-Calling `uniquePermutations()` is an O(_n_) operation, because it preprocesses the
-collection to find duplicate elements. Creating the iterator for and each call to 
-`next()` is also an O(_n_) operation.
+Calling `uniquePermutations()` is an O(_n_) operation, because it preprocesses
+the collection to find duplicate elements. Creating the iterator for and each
+call to `next()` is also an O(_n_) operation.
 
 ### Naming
 
-See the ["Naming" section for `combinations(ofCount:)`](Combinations.md#naming) for detail.
+See the ["Naming" section for `combinations(ofCount:)`](Combinations.md#naming)
+for detail.
 
 ### Comparison with other languages
 
@@ -143,5 +148,5 @@ advances an array of comparable values through their lexicographic orderings.
 This function is very similar to the `uniquePermutations(ofCount:)` method.
 
 **Rust/Ruby/Python:** Rust, Ruby, and Python all define functions with
-essentially the same semantics as the `permutations(ofCount:)` method 
-described here.
+essentially the same semantics as the `permutations(ofCount:)` method described
+here.

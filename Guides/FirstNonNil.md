@@ -1,8 +1,9 @@
 # First Non-Nil
 
-[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/FirstNonNil.swift) | 
- [Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/FirstNonNilTests.swift)]
- 
+[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/FirstNonNil.swift)
+|
+[Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/FirstNonNilTests.swift)]
+
 Returns the first non-`nil` result obtained from applying the given
 transformation to the elements of the sequence.
 
@@ -60,18 +61,17 @@ public extension Sequence {
 
 ### Complexity
 
-`firstNonNil(_:)` is an O(*n*) operation, where *n* is the number of
-elements at the start of the sequence that result in `nil` when applying the
-transformation.
+`firstNonNil(_:)` is an O(_n_) operation, where _n_ is the number of elements at
+the start of the sequence that result in `nil` when applying the transformation.
 
 ### Naming
 
 Some alternative names were considered:
 
-* `compactMapFirst(_:)`
-* `first(mapping:)`
-* `firstSome(_:)`
-* `firstMap(_:)`
+- `compactMapFirst(_:)`
+- `first(mapping:)`
+- `firstSome(_:)`
+- `firstMap(_:)`
 
 ### Comparison with other languages
 

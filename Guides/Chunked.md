@@ -1,12 +1,13 @@
 # Chunked
 
-[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/Chunked.swift) | 
- [Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/ChunkedTests.swift)]
+[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/Chunked.swift)
+|
+[Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/ChunkedTests.swift)]
 
 Break a collection into subsequences where consecutive elements pass a binary
-predicate, or where all elements in each chunk project to the same value. 
+predicate, or where all elements in each chunk project to the same value.
 
-Also, includes a `chunks(ofCount:)` that breaks a collection into subsequences 
+Also, includes a `chunks(ofCount:)` that breaks a collection into subsequences
 of a given `count`.
 
 There are two variations of the `chunked` method: `chunked(by:)` and
@@ -26,34 +27,34 @@ separates chunks where the projection of two consecutive elements is not equal.
 ```swift
 let names = ["David", "Kyle", "Karoy", "Nate"]
 let chunks = names.chunked(on: \.first!)
-// [["David"], ["Kyle", "Karoy"], ["Nate"]] 
+// [["David"], ["Kyle", "Karoy"], ["Nate"]]
 ```
 
-The `chunks(ofCount:)` takes a `count` parameter (required to be > 0) and separates 
-the collection into `n` chunks of this given count. If the `count` parameter is 
-evenly divided by the count of the base `Collection` all the chunks will have 
-the count equals to the parameter. Otherwise, the last chunk will contain the 
-remaining elements.
- 
+The `chunks(ofCount:)` takes a `count` parameter (required to be > 0) and
+separates the collection into `n` chunks of this given count. If the `count`
+parameter is evenly divided by the count of the base `Collection` all the chunks
+will have the count equals to the parameter. Otherwise, the last chunk will
+contain the remaining elements.
+
 ```swift
 let names = ["David", "Kyle", "Karoy", "Nate"]
 let evenly = names.chunks(ofCount: 2)
-// equivalent to [["David", "Kyle"], ["Karoy", "Nate"]] 
+// equivalent to [["David", "Kyle"], ["Karoy", "Nate"]]
 
 let remaining = names.chunks(ofCount: 3)
 // equivalent to [["David", "Kyle", "Karoy"], ["Nate"]]
 ```
 
-The `chunks(ofCount:)` is the method of the [existing SE proposal][proposal]. 
+The `chunks(ofCount:)` is the method of the [existing SE proposal][proposal].
 Unlike the `split` family of methods, the entire collection is included in the
-chunked result — joining the resulting chunks recreates the original collection. 
+chunked result — joining the resulting chunks recreates the original collection.
 
 ```swift
 c.elementsEqual(c.chunked(...).joined())
 // true
 ```
 
-Check the [proposal][proposal] detailed design section for more info. 
+Check the [proposal][proposal] detailed design section for more info.
 
 [proposal]: https://github.com/apple/swift-evolution/pull/935
 
@@ -93,12 +94,20 @@ The eager methods are O(_n_), the lazy methods are O(_1_).
 
 ### Naming
 
-The operation performed by these methods is similar to other ways of breaking a collection up into subsequences. In particular, the predicate-based `split(where:)` method looks similar to `chunked(on:)`. You can draw a distinction between these different operations based on the resulting subsequences:
+The operation performed by these methods is similar to other ways of breaking a
+collection up into subsequences. In particular, the predicate-based
+`split(where:)` method looks similar to `chunked(on:)`. You can draw a
+distinction between these different operations based on the resulting
+subsequences:
 
-- `split`: *In the standard library.* Breaks a collection into subsequences, removing any elements that are considered "separators". The original collection cannot be recovered from the result of splitting.
-- `chunked`: *In this package.* Breaks a collection into subsequences, preserving each element in its initial ordering. Joining the resulting subsequences re-forms the original collection.
-- `sliced`: *Not included in this package or the stdlib.* Breaks a collection into potentially overlapping subsequences.
-
+- `split`: _In the standard library._ Breaks a collection into subsequences,
+  removing any elements that are considered "separators". The original
+  collection cannot be recovered from the result of splitting.
+- `chunked`: _In this package._ Breaks a collection into subsequences,
+  preserving each element in its initial ordering. Joining the resulting
+  subsequences re-forms the original collection.
+- `sliced`: _Not included in this package or the stdlib._ Breaks a collection
+  into potentially overlapping subsequences.
 
 ### Comparison with other languages
 

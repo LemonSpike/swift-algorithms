@@ -1,7 +1,8 @@
 # Cycle
 
-[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/Cycle.swift) | 
- [Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/CycleTests.swift)]
+[[Source](https://github.com/apple/swift-algorithms/blob/main/Sources/Algorithms/Cycle.swift)
+|
+[Tests](https://github.com/apple/swift-algorithms/blob/main/Tests/SwiftAlgorithmsTests/CycleTests.swift)]
 
 Iterate over a collection forever, or a set number of times.
 
@@ -16,9 +17,9 @@ for x in (1...3).cycled(times: 3) {
 // Prints 1 through 3 three times
 ```
 
-`cycled(times:)` provides a more expressive way of repeating a
-collection's elements a limited number of times than 
-combining `repeatElement(_:count:)` and `joined()`.
+`cycled(times:)` provides a more expressive way of repeating a collection's
+elements a limited number of times than combining `repeatElement(_:count:)` and
+`joined()`.
 
 ## Detailed Design
 
@@ -37,9 +38,9 @@ design makes infinitely large types impossible/impractical. `Cycle` also
 conforms to `LazySequenceProtocol` when the base type conforms.
 
 The `FiniteCycle` type always has `Collection` conformance, with
-`BidirectionalCollection` conformance
-when called on a bidirectional collection. `FiniteCycle` also
-conforms to `LazyCollectionProtocol` when the base type conforms.
+`BidirectionalCollection` conformance when called on a bidirectional collection.
+`FiniteCycle` also conforms to `LazyCollectionProtocol` when the base type
+conforms.
 
 ### Complexity
 
@@ -49,8 +50,8 @@ Calling these methods is O(_1_).
 
 There's a slight off-by-one ambiguity around the naming of `cycled(times:)`,
 since one can reasonably interpret the number of cycles as including the first
-run-through of elements (the actual semantics) or starting after the first 
-set. This ambiguity is present in all the different potential names for this
+run-through of elements (the actual semantics) or starting after the first set.
+This ambiguity is present in all the different potential names for this
 function: `repeated(times:)`, `cycled(repetitions:)`, etc.
 
 ### Comparison with other languages
