@@ -17,20 +17,20 @@ extension Sequence {
     sortedBy areInIncreasingOrder: (Element, Element) throws -> Bool
   ) rethrows -> [Element] {
     var iterator = makeIterator()
-    
+
     var result: [Element] = []
     result.reserveCapacity(count)
     while result.count < count, let e = iterator.next() {
       result.append(e)
     }
     try result.sort(by: areInIncreasingOrder)
-    
+
     while let e = iterator.next() {
       // To be part of `result`, `e` must be strictly less than `result.last`.
       guard try areInIncreasingOrder(e, result.last!) else { continue }
       let insertionIndex =
         try result.partitioningIndex { try areInIncreasingOrder(e, $0) }
-      
+
       assert(insertionIndex != result.endIndex)
       result.removeLast()
       result.insert(e, at: insertionIndex)
@@ -38,7 +38,7 @@ extension Sequence {
 
     return result
   }
-  
+
   /// Implementation for max(count:areInIncreasingOrder:)
   @inlinable
   internal func _maxImplementation(
@@ -46,14 +46,14 @@ extension Sequence {
     sortedBy areInIncreasingOrder: (Element, Element) throws -> Bool
   ) rethrows -> [Element] {
     var iterator = makeIterator()
-    
+
     var result: [Element] = []
     result.reserveCapacity(count)
     while result.count < count, let e = iterator.next() {
       result.append(e)
     }
     try result.sort(by: areInIncreasingOrder)
-    
+
     while let e = iterator.next() {
       // To be part of `result`, `e` must be greater/equal to `result.first`.
       guard try !areInIncreasingOrder(e, result.first!) else { continue }
@@ -71,10 +71,10 @@ extension Sequence {
       }
       result[insertionIndex - 1] = e
     }
-    
+
     return result
   }
-  
+
   /// Returns the smallest elements of this sequence, as sorted by the given
   /// predicate.
   ///
@@ -271,7 +271,7 @@ extension Collection {
     guard prefixCount < (self.count / 10) else {
       return Array(try sorted(by: areInIncreasingOrder).prefix(prefixCount))
     }
-    
+
     return try _minImplementation(count: count, sortedBy: areInIncreasingOrder)
   }
 

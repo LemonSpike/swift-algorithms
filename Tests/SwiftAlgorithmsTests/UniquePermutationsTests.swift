@@ -14,7 +14,7 @@ import Algorithms
 
 final class UniquePermutationsTests: XCTestCase {
   static let numbers = [1, 1, 1, 2, 3]
-  
+
   static let numbersPermutations: [[[Int]]] = [
     // k = 0
     [[]],
@@ -54,26 +54,26 @@ extension UniquePermutationsTests {
     XCTAssertEqualSequences(
       ([] as [Int]).uniquePermutations(ofCount: 1...3), [])
   }
-  
+
   func testSingleCounts() {
     for (k, expectation) in Self.numbersPermutations.enumerated() {
       XCTAssertEqualSequences(
         expectation,
         Self.numbers.uniquePermutations(ofCount: k))
     }
-    
+
     XCTAssertEqualSequences(
       Self.numbersPermutations[5],
       Self.numbers.uniquePermutations())
   }
-  
+
   func testRanges() {
     for lower in Self.numbersPermutations.indices {
       // upper bounded
       XCTAssertEqualSequences(
         Self.numbersPermutations[...lower].joined(),
         Self.numbers.uniquePermutations(ofCount: ...lower))
-      
+
       // lower bounded
       XCTAssertEqualSequences(
         Self.numbersPermutations[lower...].joined(),
@@ -91,11 +91,11 @@ extension UniquePermutationsTests {
 extension UniquePermutationsTests {
   private final class IntBox: Hashable {
     var value: Int
-    
+
     init(_ value: Int) {
       self.value = value
     }
-    
+
     static func == (lhs: IntBox, rhs: IntBox) -> Bool {
       lhs.value == rhs.value
     }
@@ -115,7 +115,7 @@ extension UniquePermutationsTests {
       }
     }
   }
-  
+
   func testLaziness() {
     XCTAssertLazySequence("ABCD".lazy.uniquePermutations())
   }

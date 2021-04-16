@@ -14,10 +14,10 @@
 public struct Intersperse<Base: Sequence> {
   @usableFromInline
   internal let base: Base
-  
+
   @usableFromInline
   internal let separator: Base.Element
-  
+
   @inlinable
   internal init(base: Base, separator: Base.Element) {
     self.base = base
@@ -30,19 +30,19 @@ extension Intersperse: Sequence {
   public struct Iterator: IteratorProtocol {
     @usableFromInline
     internal var iterator: Base.Iterator
-    
+
     @usableFromInline
     internal let separator: Base.Element
-    
+
     @usableFromInline
     internal var state = State.start
-    
+
     @inlinable
     internal init(iterator: Base.Iterator, separator: Base.Element) {
       self.iterator = iterator
       self.separator = separator
     }
-    
+
     @usableFromInline
     enum State {
       case start
@@ -85,7 +85,7 @@ extension Intersperse: Collection where Base: Collection {
       case element(Base.Index)
       case separator(next: Base.Index)
     }
-    
+
     @usableFromInline
     internal let representation: Representation
 
@@ -105,7 +105,7 @@ extension Intersperse: Collection where Base: Collection {
         return li <= ri
       }
     }
-    
+
     @inlinable
     static func element(_ index: Base.Index) -> Self {
       Self(representation: .element(index))
@@ -145,7 +145,7 @@ extension Intersperse: Collection where Base: Collection {
     case .separator: return separator
     }
   }
-  
+
   @inlinable
   public func index(_ i: Index, offsetBy distance: Int) -> Index {
     switch (i.representation, distance.isMultiple(of: 2)) {

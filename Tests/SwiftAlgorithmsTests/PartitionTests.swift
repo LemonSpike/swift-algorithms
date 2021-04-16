@@ -60,7 +60,7 @@ final class PartitionTests: XCTestCase {
       }
     }
   }
-  
+
   func testStablePartitionWithSubrange() {
     for length in 10...20 {
       let a = Array(0..<length)
@@ -78,7 +78,7 @@ final class PartitionTests: XCTestCase {
       }
     }
   }
-  
+
   func testPartitioningIndex() {
     for i in 0..<7 {
       for j in i..<11 {
@@ -91,7 +91,7 @@ final class PartitionTests: XCTestCase {
       }
     }
   }
-  
+
   func testPartitionWithSubrangeBidirectionalCollection() {
     for length in 10...20 {
       let a = Array(0..<length)
@@ -101,7 +101,7 @@ final class PartitionTests: XCTestCase {
           let partitionRange = j..<i
           let condition = { $0 < i - 1 }
           let p = b.partition(subrange: partitionRange, by: condition)
-          
+
           XCTAssertEqual(p, partitionRange.count == 0 ? j : j + 1)
           XCTAssertEqualSequences(b[partitionRange.lowerBound..<p], a[partitionRange].filter { !condition($0) })
           XCTAssertUnorderedEqualSequences(b[p..<partitionRange.upperBound], a[partitionRange].filter(condition))
@@ -121,11 +121,11 @@ final class PartitionTests: XCTestCase {
           let condition = { $0 < i - 1 }
           let p = b.partition(subrange: partitionRange, by: condition)
           let bdcp = bdc.partition(subrange: partitionRange, by: condition)
-          
+
           XCTAssertEqual(p, partitionRange.count == 0 ? j : j + 1)
           XCTAssertEqualSequences(b[partitionRange.lowerBound..<p], a[partitionRange].filter { !condition($0) })
           XCTAssertUnorderedEqualSequences(b[p..<partitionRange.upperBound], a[partitionRange].filter(condition))
-          
+
           // Must produce the same result as the `BidirectionalCollection` specialized overload.
           XCTAssertEqualSequences(b[partitionRange.lowerBound..<p], bdc[partitionRange.lowerBound..<bdcp])
           XCTAssertUnorderedEqualSequences(b[p..<partitionRange.upperBound], bdc[bdcp..<partitionRange.upperBound])

@@ -14,7 +14,7 @@ public struct Cycle<Base: Collection> {
   /// The collection to repeat.
   @usableFromInline
   internal let base: Base
-  
+
   @inlinable
   internal init(base: Base) {
     self.base = base
@@ -26,29 +26,29 @@ extension Cycle: Sequence {
   public struct Iterator: IteratorProtocol {
     @usableFromInline
     internal let base: Base
-    
+
     @usableFromInline
     internal var current: Base.Index
-    
+
     @inlinable
     internal init(base: Base) {
       self.base = base
       self.current = base.startIndex
     }
-    
+
     @inlinable
     public mutating func next() -> Base.Element? {
       guard !base.isEmpty else { return nil }
-      
+
       if current == base.endIndex {
         current = base.startIndex
       }
-      
+
       defer { base.formIndex(after: &current) }
       return base[current]
     }
   }
-  
+
   @inlinable
   public func makeIterator() -> Iterator {
     Iterator(base: base)
@@ -197,7 +197,7 @@ extension Collection {
   public func cycled() -> Cycle<Self> {
     Cycle(base: self)
   }
-  
+
   /// Returns a sequence that repeats the elements of this collection the
   /// specified number of times.
   ///

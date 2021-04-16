@@ -18,7 +18,7 @@ final class CompactedTests: XCTestCase {
     [nil, nil, nil, 0, 1, 2]
         .uniquePermutations(ofCount: 0...)
         .map(Array.init)
-  
+
   func testCompactedCompacted() {
     for collection in self.tests {
       let seq = AnySequence(collection)
@@ -35,7 +35,7 @@ final class CompactedTests: XCTestCase {
                               array.compacted().reversed())
     }
   }
-  
+
   func testCollectionTraversals() {
     for array in self.tests {
       validateIndexTraversals(array.compacted())

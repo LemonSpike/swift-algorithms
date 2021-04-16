@@ -16,7 +16,7 @@ public struct Chain2<Base1: Sequence, Base2: Sequence>
   /// The first sequence in this chain.
   @usableFromInline
   internal let base1: Base1
-  
+
   /// The second sequence in this chain.
   @usableFromInline
   internal let base2: Base2
@@ -33,22 +33,22 @@ extension Chain2: Sequence {
   public struct Iterator: IteratorProtocol {
     @usableFromInline
     internal var iterator1: Base1.Iterator
-    
+
     @usableFromInline
     internal var iterator2: Base2.Iterator
-    
+
     @inlinable
     internal init(_ concatenation: Chain2) {
       iterator1 = concatenation.base1.makeIterator()
       iterator2 = concatenation.base2.makeIterator()
     }
-    
+
     @inlinable
     public mutating func next() -> Base1.Element? {
       return iterator1.next() ?? iterator2.next()
     }
   }
-  
+
   @inlinable
   public func makeIterator() -> Iterator {
     Iterator(self)
@@ -98,7 +98,7 @@ extension Chain2: Collection where Base1: Collection, Base2: Collection {
       }
     }
   }
-  
+
   /// Converts an index of `Base1` to the corresponding `Index` by mapping
   /// `base1.endIndex` to `base2.startIndex`.
   @inlinable
@@ -138,16 +138,16 @@ extension Chain2: Collection where Base1: Collection, Base2: Collection {
       return Index(second: base2.index(after: i))
     }
   }
-  
+
   @inlinable
   public func index(_ i: Index, offsetBy distance: Int) -> Index {
     guard distance != 0 else { return i }
-    
+
     return distance > 0
       ? offsetForward(i, by: distance)
       : offsetBackward(i, by: -distance)
   }
-  
+
   @inlinable
   public func index(
     _ i: Index,
@@ -171,7 +171,7 @@ extension Chain2: Collection where Base1: Collection, Base2: Collection {
       else { fatalError("Index is out of bounds") }
     return index
   }
-  
+
   @inlinable
   internal func offsetBackward(_ i: Index, by distance: Int) -> Index {
     guard let index = offsetBackward(i, by: distance, limitedBy: startIndex)
@@ -185,12 +185,12 @@ extension Chain2: Collection where Base1: Collection, Base2: Collection {
   ) -> Index? {
     assert(distance >= 0)
     assert(limit >= i)
-    
+
     switch (i.position, limit.position) {
     case let (.first(i), .first(limit)):
       return base1.index(i, offsetBy: distance, limitedBy: limit)
         .map(Index.init(first:))
-    
+
     case let (.first(i), .second(limit)):
       if let j = base1.index(i, offsetBy: distance, limitedBy: base1.endIndex) {
         // the offset stays within the bounds of `base1`
@@ -201,11 +201,11 @@ extension Chain2: Collection where Base1: Collection, Base2: Collection {
         return base2.index(base2.startIndex, offsetBy: distance - d, limitedBy: limit)
           .map(Index.init(second:))
       }
-      
+
     case (.second, .first):
       // impossible because `limit >= i`
       fatalError()
-      
+
     case let (.second(i), .second(limit)):
       return base2.index(i, offsetBy: distance, limitedBy: limit)
         .map(Index.init(second:))
@@ -218,16 +218,16 @@ extension Chain2: Collection where Base1: Collection, Base2: Collection {
   ) -> Index? {
     assert(distance >= 0)
     assert(limit <= i)
-    
+
     switch (i.position, limit.position) {
     case let (.first(i), .first(limit)):
       return base1.index(i, offsetBy: -distance, limitedBy: limit)
         .map(Index.init(first:))
-      
+
     case (.first, .second):
       // impossible because `limit <= i`
       fatalError()
-      
+
     case let (.second(i), .first(limit)):
       if let j = base2.index(i, offsetBy: -distance, limitedBy: base2.startIndex) {
         // the offset stays within the bounds of `base2`
@@ -245,7 +245,7 @@ extension Chain2: Collection where Base1: Collection, Base2: Collection {
         .map(Index.init(second:))
     }
   }
-  
+
   @inlinable
   public func distance(from start: Index, to end: Index) -> Int {
     switch (start.position, end.position) {
